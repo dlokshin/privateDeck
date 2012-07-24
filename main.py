@@ -15,6 +15,17 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 
+
+####################
+# Global variables #
+####################
+
+baseUrl     = "http://deck.example.com"
+adminEmail  = "admin@example.com" #person who needs to be notified if somethings not working
+scribdEmbed = "bla bla bla" #this should be the embed code you get from scribd
+mixpEmbed   = "bla bla bla" #this should be the embed code you get from olark
+olarkEmbed  = "bla bla bla" #this should be the embed code you get from mixpanel
+
 class Viewers(db.Model):
   email    = db.StringProperty(multiline=False)
   fullName = db.StringProperty(multiline=False)
@@ -52,7 +63,7 @@ class Deck(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'index.html')
         self.response.out.write(template.render(path, template_values))
       else:
-        self.response.out.write('Expired. Please contact david@alpinereplay.com')
+        self.response.out.write('Expired. Please contact %s' %adminEmail)
 
 class MainPage(webapp.RequestHandler):
   def get(self):
@@ -109,10 +120,10 @@ class Userbook(webapp.RequestHandler):
 
 class UniqueURL(webapp.RequestHandler):
   def get(self):
-    self.response.out.write('The uniquer URL for this user is: http://deck.alpinereplay.com/?email=%s&x=%s' %(self.request.get('email'), self.request.get('x')))
+    self.response.out.write('The uniquer URL for this user is: %s/?email=%s&x=%s' %(baseUrl, self.request.get('email'), self.request.get('x')))
 
 application = webapp.WSGIApplication([
-  ('/hb92648', MainPage),
+  ('/addUsers', MainPage),
   ('/add', Userbook),
   ('/display', UniqueURL),
   ('/log', Logging),
