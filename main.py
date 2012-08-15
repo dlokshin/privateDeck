@@ -20,11 +20,11 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 # Global variables #
 ####################
 
-baseUrl     = "http://deck.example.com"
+baseUrl     = "http://example.com"
 adminEmail  = "admin@example.com" #person who needs to be notified if somethings not working
-scribdEmbed = "bla bla bla" #this should be the embed code you get from scribd
-mixpEmbed   = "bla bla bla" #this should be the embed code you get from olark
-olarkEmbed  = "bla bla bla" #this should be the embed code you get from mixpanel
+scribdEmbed = """ bla bla bla """ #this is your scribd embed code
+mixpEmbed   = """ bla bla bla """ #this is your mixpanel embed code
+olarkEmbed  = """ bla bla bla """ #this is your olark embed code
 
 class Viewers(db.Model):
   email    = db.StringProperty(multiline=False)
@@ -57,7 +57,12 @@ class Deck(webapp.RequestHandler):
 
       if userHash == self.request.get('x'):
         template_values = {
-            'user': user
+            'user':        user,
+            'baseurl':     baseUrl,
+            'adminEmail':  adminEmail,
+            'scribdEmbed': scribdEmbed,
+            'mixpEmbed':   mixpEmbed,
+            'olarkEmbed':  olarkEmbed,
         }
 
         path = os.path.join(os.path.dirname(__file__), 'index.html')

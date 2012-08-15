@@ -21,16 +21,10 @@
 <div id="header"><div class="logo"></div></div>
 
 {{scribdEmbed}}
+
 {{olarkEmbed}}
 
-<script>
-olark('api.visitor.updateFullName', {fullName: '{{user.fullName}}' });
-</script>
-
 {{mixpEmbed}}
-<script>
-mpq.name_tag('{{user.fullName}}'); mpq.track('{{user.fullName}}');
-</script><!-- end Mixpanel -->
 
 <script>
 $(document).ready(function () {
@@ -40,6 +34,9 @@ $(document).ready(function () {
     var url = 'http://deck.alpinereplay.com/log';
 
     $.post(url, sendData);
+
+    mpq.name_tag('{{user.fullName}}'); mpq.track('{{user.fullName}}');
+    olark('api.visitor.updateFullName', {fullName: '{{user.fullName}}' });
 
 });
 </script>
