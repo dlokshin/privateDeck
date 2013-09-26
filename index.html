@@ -31,7 +31,7 @@ $(document).ready(function () {
 
     var sendData = 'city=' + geoip_city() + '&country=' + geoip_country_name() + '&state=' + geoip_region_name()
                     + '&name=' + userName + '&email=' + userEmail;
-    var url = 'http://deck.alpinereplay.com/log';
+    var url = 'http://<<location of this app here>>/log';
 
     $.post(url, sendData);
 
